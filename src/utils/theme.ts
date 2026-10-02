@@ -7,16 +7,13 @@ const THEME_KEY = 'salarywise_theme';
 export function getInitialTheme(): Theme {
   try {
     const saved = localStorage.getItem(THEME_KEY);
-    if (saved === 'light' || saved === 'dark') {
+    if (saved === 'dark' || saved === 'light') {
       return saved;
-    }
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
     }
   } catch {
     // fallback to light
   }
+  // Default is strictly light theme as requested
   return 'light';
 }
 
