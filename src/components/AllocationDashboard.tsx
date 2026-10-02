@@ -82,7 +82,7 @@ export const AllocationDashboard: React.FC<AllocationDashboardProps> = ({
   return (
     <div className="space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {/* Top Banner & Quick Controls */}
-      <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+      <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 dark:from-emerald-950 dark:via-teal-950 dark:to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden transition-colors">
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -155,59 +155,59 @@ export const AllocationDashboard: React.FC<AllocationDashboardProps> = ({
       {/* Top Level KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* KPI 1: In-Hand Income */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-semibold mb-2">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs transition-colors">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold mb-2">
             <span>Total Monthly In-Hand</span>
-            <Wallet className="w-4 h-4 text-slate-400" />
+            <Wallet className="w-4 h-4 text-slate-400 dark:text-slate-500" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900">
+          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             {formatINR(totalAmount)}
           </div>
-          <div className="text-[11px] text-emerald-700 font-bold mt-1">
+          <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold mt-1">
             {formatINR(totalAmount * 12)} / year
           </div>
         </div>
 
         {/* KPI 2: Essentials */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs">
-          <div className="flex items-center justify-between text-xs text-sky-800 font-semibold mb-2">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs transition-colors">
+          <div className="flex items-center justify-between text-xs text-sky-800 dark:text-sky-300 font-semibold mb-2">
             <span>Essential Needs</span>
-            <Home className="w-4 h-4 text-sky-600" />
+            <Home className="w-4 h-4 text-sky-600 dark:text-sky-400" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-sky-950">
+          <div className="text-xl sm:text-2xl font-extrabold text-sky-950 dark:text-sky-200">
             {formatINR(allocations.needs?.amount || 0)}
           </div>
-          <div className="text-[11px] text-sky-800 font-bold mt-1">
+          <div className="text-[11px] text-sky-800 dark:text-sky-400 font-bold mt-1">
             {allocations.needs?.percentage}% of total income
           </div>
         </div>
 
         {/* KPI 3: Wealth Building */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs">
-          <div className="flex items-center justify-between text-xs text-purple-800 font-semibold mb-2">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs transition-colors">
+          <div className="flex items-center justify-between text-xs text-purple-800 dark:text-purple-300 font-semibold mb-2">
             <span>Wealth & Retirement</span>
-            <TrendingUp className="w-4 h-4 text-purple-600" />
+            <TrendingUp className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-purple-950">
+          <div className="text-xl sm:text-2xl font-extrabold text-purple-950 dark:text-purple-200">
             {formatINR(totalInvestments)}
           </div>
-          <div className="text-[11px] text-purple-800 font-bold mt-1">
+          <div className="text-[11px] text-purple-800 dark:text-purple-400 font-bold mt-1">
             {totalInvestmentsPct}% of total income
           </div>
         </div>
 
         {/* KPI 4: Liquid Savings & Goals */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs">
-          <div className="flex items-center justify-between text-xs text-emerald-800 font-semibold mb-2">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs transition-colors">
+          <div className="flex items-center justify-between text-xs text-emerald-800 dark:text-emerald-300 font-semibold mb-2">
             <span>Liquid Cushion & Goals</span>
-            <PiggyBank className="w-4 h-4 text-emerald-600" />
+            <PiggyBank className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-emerald-950">
+          <div className="text-xl sm:text-2xl font-extrabold text-emerald-950 dark:text-emerald-200">
             {formatINR(
               (allocations.emergency?.amount || 0) + (allocations.goals?.amount || 0)
             )}
           </div>
-          <div className="text-[11px] text-emerald-800 font-bold mt-1">
+          <div className="text-[11px] text-emerald-800 dark:text-emerald-400 font-bold mt-1">
             {(allocations.emergency?.percentage || 0) + (allocations.goals?.percentage || 0)}% of total
           </div>
         </div>
@@ -220,23 +220,23 @@ export const AllocationDashboard: React.FC<AllocationDashboardProps> = ({
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
               Salary Allocation Breakdown
             </h3>
-            <p className="text-xs sm:text-sm text-slate-500">
-              Precise rupee values and percentage shares for each bucket.
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Clear rupee values and percentage shares for each bucket.
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold">
+          <div className="flex flex-wrap items-center bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
             <button
               type="button"
               onClick={() => setActiveCategoryFilter('all')}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 activeCategoryFilter === 'all'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               All Buckets
@@ -246,8 +246,8 @@ export const AllocationDashboard: React.FC<AllocationDashboardProps> = ({
               onClick={() => setActiveCategoryFilter('needs')}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 activeCategoryFilter === 'needs'
-                  ? 'bg-white text-sky-800 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-900 text-sky-800 dark:text-sky-300 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Needs & Protection
@@ -257,8 +257,8 @@ export const AllocationDashboard: React.FC<AllocationDashboardProps> = ({
               onClick={() => setActiveCategoryFilter('wealth')}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 activeCategoryFilter === 'wealth'
-                  ? 'bg-white text-purple-800 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-900 text-purple-800 dark:text-purple-300 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Wealth & Growth
@@ -268,8 +268,8 @@ export const AllocationDashboard: React.FC<AllocationDashboardProps> = ({
               onClick={() => setActiveCategoryFilter('savings')}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 activeCategoryFilter === 'savings'
-                  ? 'bg-white text-emerald-800 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-300 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Savings & Goals

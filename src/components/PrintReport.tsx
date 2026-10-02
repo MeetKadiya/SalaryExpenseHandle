@@ -45,7 +45,7 @@ export const PrintReport: React.FC<PrintReportProps> = ({ result, profile }) => 
           <span className="text-sm font-bold text-slate-900">{stageLabels[profile.lifeStage]}</span>
         </div>
         <div>
-          <span className="text-slate-500 block">Risk Preference</span>
+          <span className="text-slate-500 block">Risk Style</span>
           <span className="text-sm font-bold capitalize text-slate-900">{profile.riskPreference}</span>
         </div>
         <div>
@@ -73,9 +73,8 @@ export const PrintReport: React.FC<PrintReportProps> = ({ result, profile }) => 
             .filter((item) => item.percentage > 0)
             .map((item) => (
               <tr key={item.key}>
-                <td className="p-2.5 font-bold flex items-center gap-1.5">
-                  <span>{item.emoji}</span>
-                  <span>{item.label}</span>
+                <td className="p-2.5 font-bold">
+                  {item.label}
                 </td>
                 <td className="p-2.5 font-bold">{item.percentage}%</td>
                 <td className="p-2.5 font-bold text-slate-900">{formatINR(item.amount)}</td>
@@ -95,7 +94,7 @@ export const PrintReport: React.FC<PrintReportProps> = ({ result, profile }) => 
         </tfoot>
       </table>
 
-      {/* Key Strategic Recommendations */}
+      {/* Strategic Recommendations */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="p-4 border border-slate-300 rounded-xl text-xs">
           <h3 className="font-bold text-slate-900 mb-1">Emergency Fund Strategy</h3>

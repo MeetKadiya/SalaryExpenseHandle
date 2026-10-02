@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { CategoryKey, AllocationResult } from '../types/financial';
 import { formatINR } from '../utils/formatters';
+import { CategoryIcon } from './CategoryIcon';
 import { Sliders, RotateCcw, Check, AlertCircle } from 'lucide-react';
 
 interface AllocationTunerProps {
@@ -73,16 +74,16 @@ export const AllocationTuner: React.FC<AllocationTunerProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-8">
+    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none p-6 sm:p-8 transition-colors">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-700">
+          <div className="w-10 h-10 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center text-indigo-700 dark:text-indigo-400">
             <Sliders className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-900">Custom Allocation Fine-Tuning</h3>
-            <p className="text-xs sm:text-sm text-slate-500">
-              Want to tweak the exact percentages? Manually customize every allocation slice.
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Custom Allocation Sliders</h3>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Want to adjust the exact percentages? Manually fine-tune every slice.
             </p>
           </div>
         </div>
@@ -90,31 +91,31 @@ export const AllocationTuner: React.FC<AllocationTunerProps> = ({
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs sm:text-sm rounded-xl transition-colors cursor-pointer border border-indigo-200 self-start sm:self-auto"
+          className="px-4 py-2 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 font-bold text-xs sm:text-sm rounded-xl transition-colors cursor-pointer border border-indigo-200 dark:border-indigo-800 self-start sm:self-auto"
         >
           {isOpen ? 'Close Customizer' : 'Customize Percentages'}
         </button>
       </div>
 
       {isOpen && (
-        <div className="mt-6 pt-6 border-t border-slate-100 animate-fade-in space-y-6">
+        <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 animate-fade-in space-y-6">
           {/* Total Sum Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-wider font-bold text-slate-600">
+              <span className="text-xs uppercase tracking-wider font-bold text-slate-600 dark:text-slate-400">
                 Total Percentage:
               </span>
               <span
                 className={`text-base font-extrabold px-3 py-0.5 rounded-full ${
                   totalSum === 100
-                    ? 'bg-emerald-100 text-emerald-800'
-                    : 'bg-rose-100 text-rose-800'
+                    ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
+                    : 'bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300'
                 }`}
               >
                 {totalSum}%
               </span>
               {totalSum !== 100 && (
-                <span className="text-xs text-rose-600 font-semibold flex items-center gap-1">
+                <span className="text-xs text-rose-600 dark:text-rose-400 font-semibold flex items-center gap-1">
                   <AlertCircle className="w-3.5 h-3.5" /> Must equal exactly 100%
                 </span>
               )}
@@ -140,7 +141,7 @@ export const AllocationTuner: React.FC<AllocationTunerProps> = ({
                   });
                   setLocalPcts(pcts);
                 }}
-                className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 border border-slate-200 rounded-lg hover:bg-slate-100 font-medium cursor-pointer transition-colors flex items-center gap-1"
+                className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 font-medium cursor-pointer transition-colors flex items-center gap-1"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Reset to Recommended</span>
@@ -159,16 +160,16 @@ export const AllocationTuner: React.FC<AllocationTunerProps> = ({
               return (
                 <div
                   key={catKey}
-                  className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-2"
+                  className="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-2xs space-y-2"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                      <span>{item.emoji}</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                      <CategoryIcon category={item.key} className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>{item.label}</span>
                     </span>
                     <div className="text-right">
-                      <span className="text-sm font-extrabold text-slate-900 mr-2">{pct}%</span>
-                      <span className="text-xs text-slate-500 font-semibold">{formatINR(amt)}</span>
+                      <span className="text-sm font-extrabold text-slate-900 dark:text-white mr-2">{pct}%</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">{formatINR(amt)}</span>
                     </div>
                   </div>
 

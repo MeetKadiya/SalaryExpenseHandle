@@ -21,9 +21,9 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
     <div className="w-full max-w-3xl mx-auto mb-8 px-4">
       <div className="relative flex items-center justify-between">
         {/* Progress connecting line */}
-        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 h-1 bg-slate-200 -z-10 rounded-full" />
+        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 h-1 bg-slate-200 dark:bg-slate-800 -z-10 rounded-full" />
         <div
-          className="absolute top-1/2 left-0 -translate-y-1/2 h-1 bg-emerald-600 -z-10 rounded-full transition-all duration-500 ease-out"
+          className="absolute top-1/2 left-0 -translate-y-1/2 h-1 bg-emerald-600 dark:bg-emerald-500 -z-10 rounded-full transition-all duration-500 ease-out"
           style={{ width: `${((currentStep - 1) / (STEPS.length - 1)) * 100}%` }}
         />
 
@@ -45,17 +45,21 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
               <div
                 className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold border-2 transition-all ${
                   isCompleted
-                    ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                    ? 'bg-emerald-600 border-emerald-600 text-white shadow-xs'
                     : isCurrent
-                    ? 'bg-white border-emerald-600 text-emerald-700 shadow-md ring-4 ring-emerald-500/20'
-                    : 'bg-white border-slate-300 text-slate-400'
+                    ? 'bg-white dark:bg-slate-900 border-emerald-600 dark:border-emerald-400 text-emerald-700 dark:text-emerald-400 shadow-md ring-4 ring-emerald-500/20'
+                    : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-400 dark:text-slate-500'
                 }`}
               >
                 {isCompleted ? <Check className="w-4 h-4 stroke-[3]" /> : step.id}
               </div>
               <span
                 className={`mt-2 text-xs font-semibold hidden sm:block ${
-                  isCurrent ? 'text-emerald-800' : isCompleted ? 'text-slate-800' : 'text-slate-400'
+                  isCurrent
+                    ? 'text-emerald-800 dark:text-emerald-400'
+                    : isCompleted
+                    ? 'text-slate-800 dark:text-slate-200'
+                    : 'text-slate-400 dark:text-slate-500'
                 }`}
               >
                 {step.title}

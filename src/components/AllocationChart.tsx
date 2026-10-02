@@ -12,7 +12,8 @@ import {
 } from 'recharts';
 import type { AllocationResult } from '../types/financial';
 import { formatINR } from '../utils/formatters';
-import { PieChart as PieIcon, BarChart3 } from 'lucide-react';
+import { CategoryIcon } from './CategoryIcon';
+import { PieChart as PieIcon, BarChart3, Wallet, Home, PiggyBank, TrendingUp, Target } from 'lucide-react';
 
 interface AllocationChartProps {
   result: AllocationResult;
@@ -34,12 +35,9 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
       value: item.percentage,
       amount: item.amount,
       color: item.color,
-      emoji: item.emoji,
       key: item.key,
     }));
 
-  // Prepare Horizontal Bar Chart data comparing:
-  // Income vs Needs vs Savings vs Investments vs Goals
   const needsAmt = result.allocations.needs?.amount || 0;
   const savingsAmt = result.allocations.emergency?.amount || 0;
   const investmentsAmt =
@@ -54,36 +52,36 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
       category: 'Total Income',
       amount: monthlyIncome,
       percentage: 100,
-      fill: '#0f172a',
-      emoji: '💵',
+      fill: '#10b981',
+      iconKey: 'income',
     },
     {
       category: 'Needs',
       amount: needsAmt,
       percentage: Math.round((needsAmt / monthlyIncome) * 100),
       fill: '#0284c7',
-      emoji: '🏠',
+      iconKey: 'needs',
     },
     {
       category: 'Savings',
       amount: savingsAmt,
       percentage: Math.round((savingsAmt / monthlyIncome) * 100),
       fill: '#059669',
-      emoji: '🏦',
+      iconKey: 'emergency',
     },
     {
       category: 'Investments',
       amount: investmentsAmt,
       percentage: Math.round((investmentsAmt / monthlyIncome) * 100),
       fill: '#7c3aed',
-      emoji: '📈',
+      iconKey: 'investments',
     },
     {
       category: 'Goals & Growth',
       amount: goalsAmt,
       percentage: Math.round((goalsAmt / monthlyIncome) * 100),
       fill: '#0d9488',
-      emoji: '🎯',
+      iconKey: 'goals',
     },
   ];
 
@@ -91,9 +89,9 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-slate-900/95 text-white p-3 rounded-xl shadow-xl text-xs border border-slate-700 backdrop-blur-md">
+        <div className="bg-slate-900/95 dark:bg-slate-800/95 text-white p-3 rounded-xl shadow-xl text-xs border border-slate-700 backdrop-blur-md">
           <div className="flex items-center gap-1.5 font-bold mb-1">
-            <span>{data.emoji}</span>
+            <CategoryIcon category={data.key} className="w-4 h-4 text-emerald-400" />
             <span>{data.name}</span>
           </div>
           <div className="text-emerald-400 font-extrabold text-sm">
@@ -110,9 +108,8 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-slate-900/95 text-white p-3 rounded-xl shadow-xl text-xs border border-slate-700 backdrop-blur-md">
+        <div className="bg-slate-900/95 dark:bg-slate-800/95 text-white p-3 rounded-xl shadow-xl text-xs border border-slate-700 backdrop-blur-md">
           <div className="flex items-center gap-1.5 font-bold mb-1">
-            <span>{data.emoji}</span>
             <span>{data.category}</span>
           </div>
           <div className="text-emerald-400 font-extrabold text-sm">
@@ -126,27 +123,27 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl shadow-slate-200/50">
+    <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none transition-colors">
       {/* Header & View Toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-            Interactive Allocation Visualizer
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+            Visual Allocation Overview
           </h3>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Explore how every single rupee of your salary is distributed.
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            See how your monthly salary divides across each category.
           </p>
         </div>
 
         {/* View Switcher */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 self-start sm:self-auto text-xs font-semibold">
+        <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 self-start sm:self-auto text-xs font-semibold">
           <button
             type="button"
             onClick={() => setActiveTab('donut')}
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'donut'
-                ? 'bg-white text-emerald-800 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <PieIcon className="w-3.5 h-3.5" />
@@ -157,8 +154,8 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
             onClick={() => setActiveTab('bar')}
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'bar'
-                ? 'bg-white text-emerald-800 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
@@ -190,8 +187,7 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
                     <Cell
                       key={`cell-${index}`}
                       fill={entry.color}
-                      stroke="#ffffff"
-                      strokeWidth={2}
+                      stroke="transparent"
                       className="cursor-pointer transition-opacity duration-200"
                       opacity={activeIndex === null || activeIndex === index ? 1 : 0.6}
                     />
@@ -203,13 +199,13 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
 
             {/* Center Label inside Donut */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-              <span className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+              <span className="text-[11px] uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500">
                 Monthly Income
               </span>
-              <span className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+              <span className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {formatINR(monthlyIncome)}
               </span>
-              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full mt-0.5 border border-emerald-200">
+              <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/80 px-2 py-0.5 rounded-full mt-0.5 border border-emerald-200 dark:border-emerald-800">
                 100% Allocated
               </span>
             </div>
@@ -217,8 +213,8 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
 
           {/* Interactive Legend List */}
           <div className="lg:col-span-5 space-y-2">
-            <div className="text-xs uppercase tracking-wider font-bold text-slate-500 mb-2">
-              Allocation Breakdown
+            <div className="text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-2">
+              Allocation Slices
             </div>
             {pieData.map((item, idx) => (
               <div
@@ -227,8 +223,8 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
                 onMouseLeave={() => setActiveIndex(null)}
                 className={`p-2.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
                   activeIndex === idx
-                    ? 'bg-slate-50 border-slate-400 shadow-xs'
-                    : 'bg-white border-slate-100 hover:border-slate-200'
+                    ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-400 dark:border-slate-600 shadow-xs'
+                    : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -236,16 +232,16 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
                     className="w-3.5 h-3.5 rounded-full shrink-0"
                     style={{ backgroundColor: item.color }}
                   />
-                  <span className="text-xs font-bold text-slate-800 flex items-center gap-1">
-                    <span>{item.emoji}</span>
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <CategoryIcon category={item.key} className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                     <span>{item.name}</span>
-                  </span>
+                  </div>
                 </div>
                 <div className="text-right flex items-center gap-2">
                   <span className="text-xs font-extrabold" style={{ color: item.color }}>
                     {item.value}%
                   </span>
-                  <span className="text-xs font-semibold text-slate-700">
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     {formatINR(item.amount)}
                   </span>
                 </div>
@@ -265,7 +261,7 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
               <XAxis
                 type="number"
                 tickFormatter={(val) => formatINR(val, true)}
-                stroke="#94a3b8"
+                stroke="#64748b"
                 fontSize={12}
               />
               <YAxis
@@ -287,7 +283,7 @@ export const AllocationChart: React.FC<AllocationChartProps> = ({
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-          <p className="text-[11px] text-slate-400 text-center mt-2">
+          <p className="text-[11px] text-slate-400 dark:text-slate-500 text-center mt-2">
             Comparing Total Income vs Needs, Savings, Investments, and Goals & Growth
           </p>
         </div>

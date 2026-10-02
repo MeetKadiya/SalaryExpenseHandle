@@ -15,6 +15,7 @@ import {
   DEFAULT_PROFILE,
 } from './utils/storage';
 import type { SavedPlanEntry } from './utils/storage';
+import { useTheme } from './utils/theme';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { StepIndicator } from './components/StepIndicator';
@@ -27,6 +28,7 @@ import { SavedPlansDrawer } from './components/SavedPlansDrawer';
 import { PrintReport } from './components/PrintReport';
 
 export const App: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
   const [profile, setProfile] = useState<UserProfile>(() => loadCurrentProfile());
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [customPercentages, setCustomPercentages] = useState<Record<CategoryKey, number> | null>(null);
@@ -91,7 +93,6 @@ export const App: React.FC = () => {
 
   const handleProfileChange = (updated: Partial<UserProfile>) => {
     setProfile((prev) => ({ ...prev, ...updated }));
-    // Reset custom percentages when core profile changes
     setCustomPercentages(null);
   };
 
@@ -138,7 +139,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
       {/* Top Navigation */}
       <Navbar
         currentProfile={profile}
@@ -152,6 +153,8 @@ export const App: React.FC = () => {
           setCurrentStep(step);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       <main className="flex-1 pb-16">
@@ -229,13 +232,13 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200/80 bg-white py-8 px-4 text-center text-xs text-slate-500 space-y-2 no-print">
-        <div className="flex items-center justify-center gap-2 font-bold text-slate-700">
+      <footer className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 px-4 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2 no-print transition-colors">
+        <div className="flex items-center justify-center gap-2 font-bold text-slate-700 dark:text-slate-300">
           <span>SalaryWise</span>
           <span>•</span>
           <span>Give Every Rupee a Purpose</span>
         </div>
-        <p className="max-w-xl mx-auto text-slate-400">
+        <p className="max-w-xl mx-auto text-slate-400 dark:text-slate-500">
           Designed for Indian salaried professionals, families, students, and retirees. Calculations are dynamic, client-side, and 100% private.
         </p>
       </footer>
